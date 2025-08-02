@@ -1,11 +1,22 @@
 import { Layout, Button, Avatar, Dropdown, type MenuProps } from 'antd';
 import avatar from '../../assets/images/user.png';
 import './index.scss';
-import { MenuFoldOutlined } from '@ant-design/icons';
-
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { collapseMenu } from '../../store/reducer/tab';
 const { Header } = Layout;
 
-const CommonHeader: React.FC = () => {
+interface CommonHeaderProps {
+  collapsed: boolean;
+}
+
+const CommonHeader: React.FC<CommonHeaderProps> = ({ collapsed }) => {
+  const dispatch = useDispatch();
+
+  function setCollapsed() {
+    dispatch(collapseMenu());
+  }
+
   const logout = () => {
     console.log('User logged out');
   };
@@ -13,24 +24,19 @@ const CommonHeader: React.FC = () => {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label:(
-        <span>个人中心</span>
-      )
+      label: <span>个人中心</span>,
     },
     {
       key: '2',
-      label:(
-        <span onClick={() => logout()}>退出登录</span>
-      )
+      label: <span onClick={() => logout()}>退出登录</span>,
     },
   ];
   return (
     <Header className="header-container">
       <Button
         type="text"
-        icon={<MenuFoldOutlined />}
-        // icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        // onClick={() => setCollapsed(!collapsed)}
+        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        onClick={() => setCollapsed()}
         style={{
           fontSize: '16px',
           width: 64,

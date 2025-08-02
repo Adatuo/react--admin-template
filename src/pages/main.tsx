@@ -9,6 +9,8 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 import CommonAside from '../components/commonAside';
 import CommonHeader from '../components/commonHeader';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 const { Header, Sider, Content } = Layout;
 const Main: React.FC = () => {
@@ -16,12 +18,13 @@ const Main: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
+  // 展开收起的状态
+  const collapsed = useSelector((state:RootState) => state.tab.isCollapse);
   return (
     <Layout className="main-container">
-      <CommonAside />
+      <CommonAside collapsed={collapsed} />
       <Layout>
-        <CommonHeader />
+        <CommonHeader collapsed={collapsed}/>
         <Content
           style={{
             margin: '24px 16px',
