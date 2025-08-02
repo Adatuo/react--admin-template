@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode, Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
+import './index.scss';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <Suspense fallback="正在加载,请稍后...">
+      <App />
+    </Suspense>
   </StrictMode>,
-)
+);
