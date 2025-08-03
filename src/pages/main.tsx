@@ -11,20 +11,21 @@ import CommonAside from '../components/commonAside';
 import CommonHeader from '../components/commonHeader';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
+import { Outlet } from 'react-router-dom';
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 const Main: React.FC = () => {
   // const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   // 展开收起的状态
-  const collapsed = useSelector((state:RootState) => state.tab.isCollapse);
+  const collapsed = useSelector((state: RootState) => state.tab.isCollapse);
   return (
     <Layout className="main-container">
       <CommonAside collapsed={collapsed} />
       <Layout>
-        <CommonHeader collapsed={collapsed}/>
+        <CommonHeader collapsed={collapsed} />
         <Content
           style={{
             margin: '24px 16px',
@@ -34,7 +35,7 @@ const Main: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
