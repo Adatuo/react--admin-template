@@ -12,8 +12,10 @@
   "dependencies": {
     "@ant-design/icons": "5.x",
     "@reduxjs/toolkit": "^2.8.2",
+    "@types/mockjs": "^1.0.10",
     "antd": "^5.26.7",
     "axios": "^1.11.0",
+    "mockjs": "^1.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
