@@ -1,13 +1,25 @@
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Table } from 'antd';
 import userImg from '../../assets/images/user.png';
 import './home.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getData } from '../../api';
+import type { mockTableData } from '../../api/mockServeData/dto/home';
+import { countData, tableColumn } from '../../api/mockServeData/staticMockData/home';
+import type { staticCountData, staticTableColumns } from '../../typings/staticData/home';
+import { iconToElement } from '../../untils';
 
 const Home: React.FC = () => {
+  const [tableData, setTableData] = useState<mockTableData[]>([]);
+  const [columns, setColumns] = useState<staticTableColumns[]>([]);
+  const [countDatas, setCountDatas] = useState<staticCountData[]>([]);
+
   useEffect(() => {
-    getData().then(() => {
-     
+    setColumns(tableColumn);
+    setCountDatas(countData);
+
+    getData().then((res) => {
+      const { tableData } = res.data.getStatisticalData.data;
+      setTableData(tableData);
     });
   }, []);
   return (
@@ -30,8 +42,27 @@ const Home: React.FC = () => {
             </p>
           </div>
         </Card>
+        <Card>
+          <Table rowKey={'name'} columns={columns} dataSource={tableData} pagination={false} />
+        </Card>
       </Col>
-      <Col span={16}>col</Col>
+      <Col span={16}>
+        <div className="num">
+          {countDatas.map((item, index) => {
+            return (
+              <Card key={index}>
+                <div className="icon-box" style={{ background: item.color }}>
+                  {iconToElement(item.icon)}
+                </div>
+                <div className="detail">
+                  <p className="num">￥{item.value}</p>
+                  <p className="txt">{item.name}</p>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </Col>
     </Row>
   );
 };

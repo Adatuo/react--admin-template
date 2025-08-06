@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Layout, theme } from 'antd';
 import CommonAside from '../components/commonAside';
 import CommonHeader from '../components/commonHeader';
@@ -8,7 +7,6 @@ import { Outlet } from 'react-router-dom';
 
 const { Content } = Layout;
 const Main: React.FC = () => {
-  // const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
