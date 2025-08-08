@@ -30,10 +30,10 @@ const Home: React.FC = () => {
     getData().then((res) => {
       console.log(res);
 
-      const { tableData, orderData } = res.data.getStatisticalData.data;
+      const { tableData, orderData, userData, videoData } = res.data.getStatisticalData.data;
       setTableData(tableData);
 
-      // Echarts数据
+      // Echarts折线图数据
       const order = orderData;
       const xData = order.date;
 
@@ -52,6 +52,29 @@ const Home: React.FC = () => {
         order: {
           xData,
           series,
+        },
+        user: {
+          xData: userData.map((item) => item.date),
+          series: [
+            {
+              name: '新增用户',
+              data: userData.map((item) => item.new),
+              type: 'bar',
+            },
+            {
+              name: '活跃用户',
+              data: userData.map((item) => item.active),
+              type: 'bar',
+            },
+          ],
+        },
+        video: {
+          series: [
+            {
+              data: videoData,
+              type: 'pie',
+            },
+          ],
         },
       });
     });
@@ -99,6 +122,10 @@ const Home: React.FC = () => {
         </div>
         {/* 防止首次加载eChart是空 */}
         {echartsData.order && <Echarts style={{ height: '280px' }} chartData={echartsData.order} />}
+        <div className='graph'>
+          {echartsData.user && <Echarts style={{ height: '240px' }} chartData={echartsData.user} />}
+          {echartsData.video && <Echarts style={{ height: '260px' }} chartData={echartsData.video} isAxisChat = {false}/>}
+        </div>
       </Col>
     </Row>
   );

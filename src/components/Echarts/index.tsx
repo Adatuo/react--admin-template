@@ -9,7 +9,7 @@ interface EchartsProps {
   style: CSSProperties;
   chartData: {
     // xData因为可能会有多个,所以就按照实际的类型来定义
-    xData: EchartsData['order']['xData'];
+    xData?: EchartsData['order']['xData'];
     series: EChartsOption['series'];
   };
   isAxisChat?: boolean;
@@ -84,5 +84,5 @@ export const Echarts: FC<EchartsProps> = ({ style, chartData, isAxisChat = true 
       echartObject.current.setOption(options, true); // true 表示不与之前的 option 合并
     }
   }, [chartData]);
-  return <div style={style} ref={echartRef}></div>;
+  return <div style={{...style, width: '100%'}} ref={echartRef}></div>;
 };
