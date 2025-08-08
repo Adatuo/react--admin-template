@@ -28,7 +28,7 @@ const Home: React.FC = () => {
     setCountDatas(countData);
 
     getData().then((res) => {
-      const { tableData, orderData, userData, videoData } = res.data.getStatisticalData.data;
+      const { tableData, orderData, userData, videoData } = res.data.data;
       setTableData(tableData);
 
       // Echarts折线图数据
