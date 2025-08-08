@@ -28,8 +28,6 @@ const Home: React.FC = () => {
     setCountDatas(countData);
 
     getData().then((res) => {
-      console.log(res);
-
       const { tableData, orderData, userData, videoData } = res.data.getStatisticalData.data;
       setTableData(tableData);
 
