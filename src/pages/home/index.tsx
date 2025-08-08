@@ -5,23 +5,58 @@ import { useEffect, useState } from 'react';
 import { getData } from '../../api';
 import type { mockTableData } from '../../api/mockServeData/dto/home';
 import { countData, tableColumn } from '../../api/mockServeData/staticMockData/home';
-import type { staticCountData, staticTableColumns } from '../../typings/staticData/home';
+import type {
+  EchartsData,
+  staticCountData,
+  staticTableColumns,
+} from '../../typings/staticData/home';
 import { iconToElement } from '../../untils';
+import { Echarts } from '../../components/Echarts';
 
 const Home: React.FC = () => {
+  // 表格数据
   const [tableData, setTableData] = useState<mockTableData[]>([]);
+  // 表格列
   const [columns, setColumns] = useState<staticTableColumns[]>([]);
+  // 统计数据
   const [countDatas, setCountDatas] = useState<staticCountData[]>([]);
+  // Echarts数据
+  const [echartsData, setEchartsData] = useState<EchartsData>({} as EchartsData);
 
   useEffect(() => {
     setColumns(tableColumn);
     setCountDatas(countData);
 
     getData().then((res) => {
-      const { tableData } = res.data.getStatisticalData.data;
+      console.log(res);
+
+      const { tableData, orderData } = res.data.getStatisticalData.data;
       setTableData(tableData);
+
+      // Echarts数据
+      const order = orderData;
+      const xData = order.date;
+
+      const keyArray = Object.keys(order.data[0]);
+      const series: EchartsData['order']['series'] = [];
+      keyArray.forEach((key) => {
+        series.push({
+          name: key,
+          data: order.data.map((item) => item[key]),
+          type: 'line',
+        });
+      });
+
+      setEchartsData({
+        ...echartsData,
+        order: {
+          xData,
+          series,
+        },
+      });
     });
   }, []);
+
   return (
     <Row className="home">
       <Col span={8}>
@@ -62,6 +97,8 @@ const Home: React.FC = () => {
             );
           })}
         </div>
+        {/* 防止首次加载eChart是空 */}
+        {echartsData.order && <Echarts style={{ height: '280px' }} chartData={echartsData.order} />}
       </Col>
     </Row>
   );

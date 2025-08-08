@@ -1,3 +1,5 @@
+import type { EChartsOption } from "echarts";
+
 export interface staticTableColumns {
   title: string;
   dataIndex: string;
@@ -8,4 +10,12 @@ export interface staticCountData {
   value: number;
   icon: string;
   color: string;
+}
+
+export interface EchartsData {
+  order: {
+    //xDate因为可能会有多个,所以就按照实际的类型来定义
+    xData: Date[];
+    series: EChartsOption['series']
+  };
 }
