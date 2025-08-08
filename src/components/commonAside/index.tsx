@@ -1,5 +1,5 @@
 import { Layout, Menu} from 'antd';
-import menuConfig from '../../config';
+import menuConfig from '../../../public/config';
 import { getMenuItems } from '../../untils';
 
 const { Sider } = Layout;

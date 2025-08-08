@@ -1,4 +1,4 @@
-import type { MenuConfig } from "../typings/misc";
+import type { MenuConfig } from "../../src/typings/misc";
 
 const menuConfig: MenuConfig[] = [
   {
