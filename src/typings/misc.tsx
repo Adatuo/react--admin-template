@@ -6,3 +6,4 @@ export interface MenuConfig {
   url?: string;
   children?: MenuConfig[];
 }
+

@@ -4,6 +4,7 @@ import App from './App.tsx';
 import './index.scss';
 import { Provider } from 'react-redux'
 import store from './store/index.tsx';
+import './api/mock.jsx'; 
 
 
 createRoot(document.getElementById('root')!).render(
