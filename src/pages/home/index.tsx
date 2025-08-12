@@ -1,4 +1,4 @@
-import { Card, Col, Row, Table } from 'antd';
+import { Card, Col, Row, Table, type TableProps } from 'antd';
 import userImg from '../../assets/images/user.png';
 import './home.scss';
 import { useEffect, useState } from 'react';
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
   // 表格数据
   const [tableData, setTableData] = useState<mockTableData[]>([]);
   // 表格列
-  const [columns, setColumns] = useState<staticTableColumns[]>([]);
+  const [columns, setColumns] = useState<TableProps<mockTableData>['columns']>([]);
   // 统计数据
   const [countDatas, setCountDatas] = useState<staticCountData[]>([]);
   // Echarts数据
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
     setCountDatas(countData);
 
     getData().then((res) => {
-      const { tableData, orderData, userData, videoData } = res.data.getStatisticalData.data;
+      const { tableData, orderData, userData, videoData } = res.data.data;
       setTableData(tableData);
 
       // Echarts折线图数据
@@ -99,7 +99,12 @@ const Home: React.FC = () => {
           </div>
         </Card>
         <Card>
-          <Table rowKey={'name'} columns={columns} dataSource={tableData} pagination={false} />
+          <Table<mockTableData>
+            rowKey={'name'}
+            columns={columns}
+            dataSource={tableData}
+            pagination={false}
+          />
         </Card>
       </Col>
       <Col span={16}>
@@ -120,9 +125,11 @@ const Home: React.FC = () => {
         </div>
         {/* 防止首次加载eChart是空 */}
         {echartsData.order && <Echarts style={{ height: '280px' }} chartData={echartsData.order} />}
-        <div className='graph'>
+        <div className="graph">
           {echartsData.user && <Echarts style={{ height: '240px' }} chartData={echartsData.user} />}
-          {echartsData.video && <Echarts style={{ height: '260px' }} chartData={echartsData.video} isAxisChat = {false}/>}
+          {echartsData.video && (
+            <Echarts style={{ height: '260px' }} chartData={echartsData.video} isAxisChat={false} />
+          )}
         </div>
       </Col>
     </Row>

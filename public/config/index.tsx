@@ -1,4 +1,4 @@
-import type { MenuConfig } from '../typings/misc';
+import type { MenuConfig } from "../../src/typings/misc";
 /**这里是静态数据路由,通常应该
  * 后端 API。在用户登录后动态获取。
  * 根据后端返回的权限列表，使用动态 import() 异步加载组件，动态生成路由配置。
