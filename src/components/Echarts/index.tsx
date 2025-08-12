@@ -2,7 +2,7 @@ import * as echarts from 'echarts';
 import { useEffect, useRef, type CSSProperties, type FC } from 'react';
 // 从 ECharts 中导入核心类型
 import type { EChartsOption, EChartsType } from 'echarts';
-import type { EchartsData } from '../../typings/staticData/home';
+import type { EchartsData } from '../../typings/pages/home';
 
 // 为组件的 props 定义接口
 interface EchartsProps {

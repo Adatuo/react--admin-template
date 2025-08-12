@@ -29,6 +29,9 @@ const routes = createBrowserRouter([{
     {
       path: 'user',
       Component: User,
+    },
+    {
+      path: 'other',
       children: [
         {
           path: 'pageOne',

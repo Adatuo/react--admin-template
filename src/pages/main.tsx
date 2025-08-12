@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { Outlet } from 'react-router-dom';
 import AuthRoute from '../router/routerAuth';
+import CommonTag from '../components/commonTag';
 
 const { Content } = Layout;
 const Main: React.FC = () => {
@@ -19,7 +20,8 @@ const Main: React.FC = () => {
         <CommonAside collapsed={collapsed} />
         <Layout>
           <CommonHeader collapsed={collapsed} />
-          <Content
+          <CommonTag />
+        <Content
             style={{
               margin: '24px 16px',
               padding: 24,
