@@ -3,8 +3,7 @@ import menuConfig from '../../config';
 import { getMenuItems } from '../../untils';
 import { useNavigate } from 'react-router-dom';
 import { selectMenuList } from '../../store/reducer/tab';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../store';
+import { useDispatch} from 'react-redux';
 
 const { Sider } = Layout;
 
@@ -12,7 +11,6 @@ function CommonAside({ collapsed }: { collapsed: boolean }) {
   const items = getMenuItems(menuConfig);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentTag = useSelector((state: RootState) => state.tab.currentTag);
 
   //添加路由权限数据到store
   const setTabsList = (val) => {

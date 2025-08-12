@@ -9,7 +9,7 @@ import type {
   EchartsData,
   staticCountData,
   staticTableColumns,
-} from '../../typings/staticData/home';
+} from '../../typings/pages/home';
 import { iconToElement } from '../../untils';
 import { Echarts } from '../../components/Echarts';
 

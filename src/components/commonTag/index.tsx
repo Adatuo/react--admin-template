@@ -1,6 +1,6 @@
 import { Space, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useActionData, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { RootState } from '../../store';
 import './index.scss';
 import { closeTag, setCurrentTag } from '../../store/reducer/tab';
