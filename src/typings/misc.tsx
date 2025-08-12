@@ -7,3 +7,10 @@ export interface MenuConfig {
   children?: MenuConfig[];
 }
 
+export interface CommonHeaderProps {
+  collapsed: boolean;
+}
+
+export interface AuthProps {
+  children: React.ReactNode;
+}

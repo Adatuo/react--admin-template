@@ -1,5 +1,6 @@
 import { createBrowserRouter,Navigate} from "react-router-dom";
 import { lazy } from "react";
+import Login from "../pages/login/login";
 
 const Main = lazy(() => import('../pages/main'))
 const Home = lazy(() => import('../pages/home'))
@@ -40,6 +41,11 @@ const routes = createBrowserRouter([{
       ]
     }
   ]
-}])
+},
+  {
+    path: '/login',
+    Component: Login
+  },
+])
 
 export default routes
