@@ -4,21 +4,21 @@ import './index.scss';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { collapseMenu } from '../../store/reducer/tab';
+import { useNavigate } from 'react-router-dom';
+import type { CommonHeaderProps } from '../../typings/misc';
 const { Header } = Layout;
-
-interface CommonHeaderProps {
-  collapsed: boolean;
-}
 
 const CommonHeader: React.FC<CommonHeaderProps> = ({ collapsed }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function setCollapsed() {
     dispatch(collapseMenu());
   }
 
   const logout = () => {
-    console.log('User logged out');
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   const items: MenuProps['items'] = [

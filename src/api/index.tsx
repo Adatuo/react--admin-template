@@ -1,10 +1,11 @@
 import axios from "./axios";
 
-//这的TS有待封装
+//mockjs不支持TS,所有生成的API都不封装
+//菜单获取+登录
 export function getMenu(param: unknown) {
   return axios.request({
-    url: "/menu/getMenu",
-    method: "get",
+    url: "/permission/getMenu",
+    method: "post",
     data: param
   })
 }
