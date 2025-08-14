@@ -4,7 +4,6 @@ import { getMenuItems } from '../../untils';
 import { useNavigate } from 'react-router-dom';
 import { selectMenuList } from '../../store/reducer/tab';
 import { useDispatch} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
@@ -43,7 +42,6 @@ function CommonAside({ collapsed }: { collapsed: boolean }) {
     <Sider trigger={null} collapsed={collapsed}>
       <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3>
       <Menu
-        onClick={selectMenu}
         onClick={selectMenu}
         theme="dark"
         mode="inline"
