@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Card, Form, Input, Button, Row, Col, Modal, message } from 'antd';
 import userImg from '../../assets/images/user.png';
 import './index.scss';
+import type { BasicFormValues, PasswordFormValues, UserInfo } from '../../typings/pages/me';
 
 const Me: React.FC = () => {
-  // 静态用户信息
-  const [userInfo, setUserInfo] = useState({
+  // 静态用户信息,正式项目需要用useEffect获取
+  const [userInfo, setUserInfo] = useState<UserInfo>({
     name: '张三',
     position: '前端工程师',
     email: 'zhangsan@example.com',
@@ -13,31 +14,50 @@ const Me: React.FC = () => {
   });
 
   // 控制修改密码模态框显示
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [form] = Form.useForm();
 
-  // 基本资料表单提交
-  const onBasicFinish = (values: any) => {
-    setUserInfo({
-      ...userInfo,
-      name: values.name,
-      position: values.position,
+  const success = (content: string) => {
+    messageApi.open({
+      type: 'success',
+      content: content,
     });
-    message.success('基本资料更新成功');
+  };
+
+  const error = (content: string) => {
+    messageApi.open({
+      type: 'error',
+      content: content,
+    });
+  };
+
+  // 基本资料表单模拟提交
+  const onBasicFinish = (values: BasicFormValues) => {
+    setUserInfo((prev) => ({
+      ...prev,
+      name: values.name,
+      email: values.email,
+    }));
+    //接口调用到后端
+    success('基本资料修改成功（模拟）');
   };
 
   // 修改密码表单提交
-  const onPasswordFinish = (values: any) => {
+  const onPasswordFinish = (values: PasswordFormValues) => {
     if (values.newPassword !== values.confirmPassword) {
-      message.error('两次密码输入不一致');
-      return;
+      error('两次密码输入不一致');
+      return
     }
-    // 这里只是演示，实际需要调用接口
-    message.success('密码修改成功（模拟）');
+    success('密码修改成功（模拟）');
+    //清空表单
+    form.resetFields();
     setIsModalVisible(false);
   };
 
   return (
     <>
+    {contextHolder}
       <Row gutter={16}>
         <Col span={8}>
           <Card title="个人信息">
@@ -99,10 +119,13 @@ const Me: React.FC = () => {
 
       <Modal
         title="修改密码"
-        footer={null}
+        open={isModalVisible}
+        onOk={() => form.submit()}
         onCancel={() => setIsModalVisible(false)}
+        okText={'确认'}
+        cancelText={'取消'}
       >
-        <Form layout="vertical" onFinish={onPasswordFinish}>
+        <Form layout="vertical" form={form} onFinish={onPasswordFinish}>
           <Form.Item
             label="旧密码"
             name="oldPassword"
@@ -123,11 +146,6 @@ const Me: React.FC = () => {
             rules={[{ required: true, message: '请确认新密码' }]}
           >
             <Input.Password />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              修改密码
-            </Button>
           </Form.Item>
         </Form>
       </Modal>

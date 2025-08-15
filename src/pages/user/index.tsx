@@ -5,7 +5,7 @@ import { addUser, delUser, editUser, getUser } from '../../api';
 import { Modal } from 'antd';
 import { cloneDeep } from 'lodash';
 import dayjs from 'dayjs';
-import type { userListData, userTableData } from '../../typings/pages/user';
+import type { userListData, userTableData } from '../../typings/pages/userManage';
 
 const User: React.FC = () => {
   //刷新列表与查询
