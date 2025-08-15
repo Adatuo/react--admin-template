@@ -50,7 +50,6 @@ function CommonAside({ collapsed }: { collapsed: boolean }) {
     <Sider trigger={null} collapsed={collapsed}>
       <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3>
       <Menu
-        onClick={selectMenu}
         theme="dark"
         mode="inline"
         onClick={handleMenuClick}

@@ -1,7 +1,12 @@
-.common-tag {
+.tags {
   padding-left: 24px;
   padding-top: 24px;
-  .ant-space-item {
-    cursor: pointer;
-  }
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+}
+
+.common-tag {
+  cursor: pointer;
 }

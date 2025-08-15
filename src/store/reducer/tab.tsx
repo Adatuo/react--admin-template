@@ -1,44 +1,35 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { TabItem, TabState } from '../../typings/store/tab';
 
-interface TabItem {
-  path: string;
-  name: string;
-  label: string;
-  // icon:"HomeOutlined" //或许这里能够在后来的版本里面根据不同和的用户设定不同的icon
-}
-
-interface TabState {
-  isCollapse: boolean;
-  tabsList: TabItem[];
-  currentTag: TabItem;
-}
+const initialState: TabState = {
+  isCollapse: false,
+  tableList: [{ path: '/home', name: '首页' }],
+  currentMenu: { path: '/home', name: '首页' },
+};
 
 const tabSlice = createSlice({
   name: 'tab',
-  initialState: {
-    isCollapse: false,
-    tableList: [{ path: '/home', name: '首页' }],
-    currentMenu: [{ path: '/home', name: '首页' }],
-  },
+  initialState,
   reducers: {
     collapseMenu(state) {
       state.isCollapse = !state.isCollapse;
     },
-    setCurrentMenu(state, { payload: val }) {
-      state.currentMenu = val;
+    setCurrentMenu(state, action: PayloadAction<TabItem>) {
+      state.currentMenu = action.payload;
     },
-    selectMenus(state, { payload: val }) {
-      if (state.tableList.findIndex((item) => item.name === val.name) === -1) {
-        state.tableList.push(val);
+    selectMenus(state, action: PayloadAction<TabItem>) {
+      if (state.tableList.findIndex((item) => item.name === action.payload.name) === -1) {
+        state.tableList.push(action.payload);
       }
     },
-    closeTag(state, { payload: val }) {
-      const index = state.tableList.findIndex((item) => item.name === val.name);
+    closeTag(state, action: PayloadAction<TabItem>) {
+      const index = state.tableList.findIndex((item) => item.name === action.payload.name);
       if (index !== -1) {
         state.tableList.splice(index, 1);
       }
     },
   },
 });
+
 export const { collapseMenu, selectMenus, setCurrentMenu, closeTag } = tabSlice.actions;
-export default tabSlice;
+export default tabSlice.reducer;
