@@ -8,7 +8,6 @@ import { countData, tableColumn } from '../../api/mockServeData/staticMockData/h
 import type {
   EchartsData,
   staticCountData,
-  staticTableColumns,
 } from '../../typings/pages/home';
 import { iconToElement } from '../../untils';
 import { Echarts } from '../../components/Echarts';

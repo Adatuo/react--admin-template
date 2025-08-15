@@ -3,9 +3,9 @@ import './user.scss';
 import { useEffect, useState } from 'react';
 import { addUser, delUser, editUser, getUser } from '../../api';
 import { Modal } from 'antd';
-import type { userListData, userTableData } from '../../typings/staticData/user';
 import { cloneDeep } from 'lodash';
 import dayjs from 'dayjs';
+import type { userListData, userTableData } from '../../typings/pages/user';
 
 const User: React.FC = () => {
   //刷新列表与查询

@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { lazy } from 'react';
 import Login from '../pages/login/login';
+import Me from '../pages/me';
 
 const Main = lazy(() => import('../pages/main'));
 const Home = lazy(() => import('../pages/home'));
@@ -32,11 +33,15 @@ const routes = createBrowserRouter([
         Component: User,
       },
       {
-        path: '/other/pageOne',
+        path: 'me',
+        Component: Me,
+      },
+      {
+        path: 'other/pageOne',
         Component: PageOne,
       },
       {
-        path: '/other/pageTwo',
+        path: 'other/pageTwo',
         Component: PageTwo,
       },
     ],

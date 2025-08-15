@@ -6,5 +6,5 @@ export interface TabItem {
 export interface TabState {
   isCollapse: boolean;
   tableList: TabItem[];
-  currentMenu: TabItem | null;
+  currentMenu: TabItem;
 }

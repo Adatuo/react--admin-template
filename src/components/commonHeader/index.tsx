@@ -3,7 +3,7 @@ import avatar from '../../assets/images/user.png';
 import './index.scss';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { collapseMenu } from '../../store/reducer/tab';
+import { collapseMenu, selectMenus, setCurrentMenu } from '../../store/reducer/tab';
 import { useNavigate } from 'react-router-dom';
 import type { CommonHeaderProps } from '../../typings/misc';
 const { Header } = Layout;
@@ -16,6 +16,17 @@ const CommonHeader: React.FC<CommonHeaderProps> = ({ collapsed }) => {
     dispatch(collapseMenu());
   }
 
+  const addMeTag = () => {
+    const meTag = {
+      path: '/me',
+      name: '个人中心',
+    };
+    dispatch(selectMenus(meTag));
+    dispatch(setCurrentMenu(meTag));
+
+    navigate('/me');
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -24,7 +35,7 @@ const CommonHeader: React.FC<CommonHeaderProps> = ({ collapsed }) => {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <span>个人中心</span>,
+      label: <span onClick={() => addMeTag()}>个人中心</span>,
     },
     {
       key: '2',
@@ -46,7 +57,7 @@ const CommonHeader: React.FC<CommonHeaderProps> = ({ collapsed }) => {
       />
 
       <Dropdown menu={{ items }} trigger={['click']} placement="bottom" arrow>
-        <Avatar src={avatar} size={36} />
+        <Avatar src={avatar} size={36} style={{ cursor: 'pointer' }} />
       </Dropdown>
     </Header>
   );
