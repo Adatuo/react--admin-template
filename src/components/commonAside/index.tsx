@@ -1,41 +1,49 @@
-import { Layout, Menu, type MenuProps } from 'antd';
-import menuConfig from '../../../public/config';
+import { Layout, Menu } from 'antd';
+import menuConfig from '../../config';
 import { getMenuItems } from '../../untils';
 import { useNavigate } from 'react-router-dom';
-import { selectMenuList } from '../../store/reducer/tab';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMenus, setCurrentMenu } from '../../store/reducer/tab';
+import type { RootState } from '../../store';
 
 const { Sider } = Layout;
 
 function CommonAside({ collapsed }: { collapsed: boolean }) {
+  // const [collapsed, setCollapsed] = useState(false);
   const items = getMenuItems(menuConfig);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentMenu = useSelector((state: RootState) => state.tab.currentMenu);
 
-  //添加路由权限数据到store
-  const setTabsList = (val) => {
-    dispatch(selectMenuList(val));
-  };
-
-  //点击菜单
-  const selectMenu: MenuProps['onClick'] = (e) => {
+  const handleMenuClick = (e: any) => {
     navigate(e.key);
     let data;
-    //静态路由实现的tag
-    menuConfig.forEach((item) => {
-      if (item.path === e.keyPath[e.keyPath.length - 1]) {
-        data = item;
-        // 是否有二级菜单
-        if (e.keyPath.length > 1) {
-          data = item.children?.find((child) => child.path === e.key);
+    for (const item of menuConfig) {
+      if (item.children) {
+        for (const child of item.children) {
+          if (child.path === e.key) {
+            data = {
+              path: child.path,
+              name: child.label,
+            };
+            break;
+          }
         }
       }
-    });
-    setTabsList({
-      path: data.path,
-      name: data.name,
-      label: data.label,
-    });
+      if (item.path === e.key) {
+        data = {
+          path: item.path,
+          name: item.label,
+        };
+        break;
+      }
+    }
+    console.log(data);
+
+    if (data) {
+      dispatch(selectMenus(data));
+      dispatch(setCurrentMenu(data));
+    }
   };
 
   return (
@@ -45,6 +53,8 @@ function CommonAside({ collapsed }: { collapsed: boolean }) {
         onClick={selectMenu}
         theme="dark"
         mode="inline"
+        onClick={handleMenuClick}
+        selectedKeys={[currentMenu?.path]}
         items={items}
         style={{
           height: '100%',

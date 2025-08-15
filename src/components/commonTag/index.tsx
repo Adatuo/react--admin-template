@@ -1,59 +1,53 @@
-import { Space, Tag } from 'antd';
+import { Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
 import type { RootState } from '../../store';
-import './index.scss';
-import { closeTag, setCurrentTag } from '../../store/reducer/tab';
+import { closeTag, setCurrentMenu } from '../../store/reducer/tab';
+import { useNavigate } from 'react-router-dom';
 
-const CommonTag: React.FC = () => {
-  const currentTag = useSelector((state: RootState) => state.tab.currentTag);
-  const tabsList = useSelector((state: RootState) => state.tab.tabsList);
-  const navigate = useNavigate();
-  const location = useLocation();
+export const Tags = () => {
+  const tableList = useSelector((state: RootState) => state.tab.tableList);
+  const currentMenu = useSelector((state: RootState) => state.tab.currentMenu);
   const dispatch = useDispatch();
+  const navegate = useNavigate();
 
-  const handleClick = (tag) => {
-    navigate(tag.path);
-    dispatch(setCurrentTag(tag));
+  const handle = (tag) => {
+    navegate(tag.path);
+    dispatch(setCurrentMenu(tag));
   };
 
-  //Tag关闭以及切换
-  const handleClose = (tag, index) => {
+  const close = (tag, index) => {
+    //redux是异步的,更新不会错乱,同步拿到需要useEffect监听
     dispatch(closeTag(tag));
+
     if (tag.path !== location.pathname) {
       return;
     }
-    if (index === tabsList.length - 1) {
-      //关闭最后一个标签
-      dispatch(setCurrentTag(tabsList[index - 1]));
-      navigate(tabsList[index - 1].path);
-    } else if (tabsList.length > 1) {
-      dispatch(setCurrentTag(tabsList[index + 1]));
-      navigate(tabsList[index + 1].path);
+    if (index == tableList.length - 1) {
+      navegate(tableList[index - 1].path);
+      dispatch(setCurrentMenu(tableList[index - 1]));
+    } else if (tableList.length > 1) {
+      navegate(tableList[index + 1].path);
+      dispatch(setCurrentMenu(tableList[index + 1]));
     }
   };
 
-  //tag高亮
-  const setTag = (flag, item, index) => {
-    return (
-      <Tag
-        color={flag ? '#55acee' : undefined}
-        key={item.name}
-        closable={item.name !== 'home'}
-        onClick={() => handleClick(item)}
-        onClose={() => handleClose(item, index)}
-        style={{ cursor: 'pointer' }}
-      >
-        {item.label}
-      </Tag>
-    );
-  };
-
   return (
-    <Space className="common-tag" size={[0, 8]} wrap>
-      {tabsList.map((item, index) => setTag(item.path === currentTag.path, item, index))}
-    </Space>
+    <div className="tags">
+      {tableList.map((tag, index) => {
+        return (
+          <Tag
+            key={tag.path}
+            closable={tag.name !== '首页'}
+            onClose={() => close(tag, index)}
+            onClick={() => handle(tag)}
+            style={
+              currentMenu.path === tag.path ? { color: 'blue', fontWeight: 'bold' } : undefined
+            }
+          >
+            {tag.name}
+          </Tag>
+        );
+      })}
+    </div>
   );
 };
-
-export default CommonTag;

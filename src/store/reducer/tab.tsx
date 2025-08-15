@@ -17,39 +17,28 @@ const tabSlice = createSlice({
   name: 'tab',
   initialState: {
     isCollapse: false,
-    //tagList
-    tabsList: [
-      {
-        path: '/',
-        name: 'home',
-        label: '首页',
-      },
-    ],
-    currentTag: { path: '/', name: 'home', label: '首页' },
-  } as TabState,
+    tableList: [{ path: '/home', name: '首页' }],
+    currentMenu: [{ path: '/home', name: '首页' }],
+  },
   reducers: {
     collapseMenu(state) {
       state.isCollapse = !state.isCollapse;
     },
-    selectMenuList: (state, { payload: val }: PayloadAction<TabItem>) => {
-      //action的type&payload
-      state.currentTag = val;
-      if (val.name !== 'home') {
-        const index = state.tabsList.findIndex((item) => item.name === val.name);
-        if (index === -1) {
-          state.tabsList.push(val);
-        }
+    setCurrentMenu(state, { payload: val }) {
+      state.currentMenu = val;
+    },
+    selectMenus(state, { payload: val }) {
+      if (state.tableList.findIndex((item) => item.name === val.name) === -1) {
+        state.tableList.push(val);
       }
     },
-    closeTag: (state, { payload: tag }: PayloadAction<TabItem>) => {
-      const index = state.tabsList.findIndex((item) => item.name === tag.name);
-      state.tabsList.splice(index, 1);
-    },
-    setCurrentTag: (state, { payload: tag }: PayloadAction<TabItem>) => {
-      state.currentTag = tag;
+    closeTag(state, { payload: val }) {
+      const index = state.tableList.findIndex((item) => item.name === val.name);
+      if (index !== -1) {
+        state.tableList.splice(index, 1);
+      }
     },
   },
 });
-
-export const { collapseMenu, selectMenuList, closeTag, setCurrentTag } = tabSlice.actions;
-export default tabSlice.reducer;
+export const { collapseMenu, selectMenus, setCurrentMenu, closeTag } = tabSlice.actions;
+export default tabSlice;
