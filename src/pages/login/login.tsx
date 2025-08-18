@@ -3,6 +3,7 @@ import { Form, Input, Button, message } from 'antd';
 import './login.scss';
 import { getMenu } from '../../api';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Alert } from 'antd';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Login: React.FC = () => {
     <div className="login-container">
       <div className="left-image" />
       <div className="right-form">
+        <Alert message="username:Admin password:Admin" type="info" showIcon closable/>
         <h2 className="login-title">登录账号</h2>
         <Form
           name="login"
